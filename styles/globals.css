@@ -1,0 +1,29 @@
+/* Add these new styles to your existing globals.css */
+
+.auth-container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: var(--light-gray);
+  border-radius: 5px;
+}
+
+.auth-switch {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.auth-switch p {
+  margin-bottom: 10px;
+}
+
+.btn-secondary {
+  background-color: var(--white);
+  color: var(--primary-red);
+  border: 1px solid var(--primary-red);
+}
+
+.btn-secondary:hover {
+  background-color: var(--light-red);
+  color: var(--white);
+}
