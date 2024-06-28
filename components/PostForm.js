@@ -1,28 +1,42 @@
 import { useState } from 'react';
 
-const PostForm = ({ onPostCreated }) => {
+export default function PostForm({ onPostCreated }) {
   const [content, setContent] = useState('');
-  const [image, setImage] = useState(null);
+  const [mediaFile, setMediaFile] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const formData = new FormData();
-      formData.append('content', content);
-      if (image) formData.append('image', image);
+    if ((!content.trim() && !mediaFile) || isLoading) return;
 
+    setIsLoading(true);
+    const formData = new FormData();
+    formData.append('content', content);
+    if (mediaFile) {
+      formData.append('media', mediaFile);
+    }
+
+    try {
       const res = await fetch('/api/posts', {
         method: 'POST',
         body: formData,
       });
+
       const data = await res.json();
       if (data.success) {
+        onPostCreated(data.post);
         setContent('');
-        setImage(null);
-        onPostCreated();
+        setMediaFile(null);
+        if (e.target.media) {
+          e.target.media.value = '';
+        }
+      } else {
+        console.error('Failed to create post:', data.error);
       }
     } catch (error) {
-      console.error('Failed to create post:', error);
+      console.error('Error creating post:', error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -35,11 +49,13 @@ const PostForm = ({ onPostCreated }) => {
       />
       <input
         type="file"
-        onChange={(e) => setImage(e.target.files[0])}
+        name="media"
+        onChange={(e) => setMediaFile(e.target.files[0])}
+        accept="image/*,video/*"
       />
-      <button type="submit">Post</button>
+      <button type="submit" disabled={isLoading}>
+        {isLoading ? 'Posting...' : 'Post'}
+      </button>
     </form>
   );
-};
-
-export default PostForm;
+}

@@ -1,4 +1,132 @@
 /* Add these new styles to your existing globals.css */
+:root {
+  --primary-red: #FF0000;
+  --light-red: #FF3333;
+  --dark-red: #CC0000;
+  --white: #FFFFFF;
+  --black: #000000;
+  --light-gray: #F5F5F5;
+  --dark-gray: #333333;
+}
+
+/* ... (keep your existing global styles) ... */
+
+/* Navbar Styles */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--black);
+  padding: 1rem 5%;
+  color: var(--white);
+}
+
+.navbar-logo a {
+  color: var(--white);
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.navbar-links {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.navbar-links a {
+  color: var(--white);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.navbar-links a:hover {
+  color: var(--primary-red);
+}
+
+.user-menu {
+  position: relative;
+}
+
+.dropdown-toggle {
+  background: none;
+  border: none;
+  color: var(--white);
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.dropdown-menu {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  background-color: var(--white);
+  border: 1px solid var(--light-red);
+  border-radius: 4px;
+  padding: 0.5rem 0;
+  display: flex;
+  flex-direction: column;
+  min-width: 150px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-menu a,
+.dropdown-menu button {
+  color: var(--dark-gray);
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  text-align: left;
+  background: none;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.dropdown-menu a:hover,
+.dropdown-menu button:hover {
+  background-color: var(--light-gray);
+  color: var(--primary-red);
+}
+
+.auth-buttons {
+  display: flex;
+  gap: 1rem;
+}
+
+.btn {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: var(--white);
+  border: 1px solid var(--white);
+}
+
+.btn-secondary:hover {
+  background-color: var(--white);
+  color: var(--black);
+}
+
+.btn {
+  background-color: var(--primary-red);
+  color: var(--white);
+}
+
+.btn:hover {
+  background-color: var(--dark-red);
+}
+
+/* ... (keep your existing styles for other components) ... */
 
 .auth-container {
   max-width: 400px;
@@ -26,4 +154,112 @@
 .btn-secondary:hover {
   background-color: var(--light-red);
   color: var(--white);
+}
+/* About page styles */
+.about-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.about-title {
+  color: var(--primary-red);
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.about-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.about-image {
+  margin-bottom: 30px;
+}
+
+.about-text h2 {
+  color: var(--primary-red);
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.about-text p, .about-text ul {
+  margin-bottom: 15px;
+}
+
+.about-text ul {
+  list-style-type: disc;
+  padding-left: 20px;
+}
+
+@media (min-width: 768px) {
+  .about-content {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .about-image {
+    margin-right: 30px;
+    margin-bottom: 0;
+  }
+}
+.feed-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.feed-title {
+  color: var(--primary-red);
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.new-post-form {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.new-post-textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid var(--light-red);
+  border-radius: 5px;
+}
+
+.posts-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.post {
+  background-color: var(--white);
+  border: 1px solid var(--light-red);
+  border-radius: 5px;
+  padding: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.post p {
+  margin-bottom: 10px;
+}
+
+.post small {
+  color: var(--dark-gray);
+}
+.feedContainer {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f0f2f5;
+}
+
+.feedTitle {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #1a1a1a;
 }

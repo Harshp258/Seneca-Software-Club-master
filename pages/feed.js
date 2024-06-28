@@ -2,40 +2,48 @@ import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import Layout from '../components/Layout';
 import PostForm from '../components/PostForm';
-import Post from '../components/Post';
+import PostItem from '../components/PostItem';
 
 export default function Feed() {
-  const [posts, setPosts] = useState([]);
   const { data: session } = useSession();
+  const [posts, setPosts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if (session) {
-      fetchPosts();
-    }
-  }, [session]);
+    fetchPosts();
+  }, []);
 
   const fetchPosts = async () => {
     try {
+      setIsLoading(true);
       const res = await fetch('/api/posts');
       const data = await res.json();
       if (data.success) {
         setPosts(data.posts);
+      } else {
+        console.error('Failed to fetch posts:', data.error);
       }
     } catch (error) {
-      console.error('Failed to fetch posts:', error);
+      console.error('Error fetching posts:', error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  if (!session) return <p>Please sign in to view the feed.</p>;
+  const handleNewPost = (newPost) => {
+    setPosts(prevPosts => [newPost, ...prevPosts]);
+  };
 
   return (
     <Layout>
-      <h1>Welcome to Seneca Software Club</h1>
-      <PostForm onPostCreated={fetchPosts} />
       <div>
-        {posts.map(post => (
-          <Post key={post._id} post={post} />
-        ))}
+        <h1>Feed</h1>
+        {session && <PostForm onPostCreated={handleNewPost} />}
+        {isLoading ? (
+          <p>Loading posts...</p>
+        ) : (
+          posts.map(post => <PostItem key={post._id} post={post} />)
+        )}
       </div>
     </Layout>
   );
