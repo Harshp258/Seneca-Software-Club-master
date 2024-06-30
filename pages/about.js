@@ -11,7 +11,7 @@ export default function About() {
         <div className="about-content">
           <div className="about-image">
             <Image
-              src="/image/programmer.jpg"
+              src="/image/programmer1.jpg"
               alt="Seneca Software Club Logo"
               width={300}
               height={300}
