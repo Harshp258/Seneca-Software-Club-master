@@ -46,7 +46,7 @@ export default function About() {
             <section className="join-section">
               <h2>Join Us</h2>
               <p>
-                Whether you're a coding novice or an experienced developer, there's a place for 
+                Whether you&apos;re a coding novice or an experienced developer, there&apos;s a place for 
                 you in our club. Join us to learn, grow, and make lasting connections in the 
                 world of software development.
               </p>

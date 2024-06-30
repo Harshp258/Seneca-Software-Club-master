@@ -37,7 +37,7 @@ export default function SignIn() {
       <br />
       <div className="auth-container">
         <h1>Welcome Back</h1>
-        <p className="auth-subtitle">Sign in to continue your journey</p>
+        <p className="auth-subtitle">Sign in to continue your Journey</p>
         <form onSubmit={handleSubmit} className="auth-form">
           <div className="input-group">
             <FaEnvelope className="input-icon" />
@@ -67,7 +67,7 @@ export default function SignIn() {
           {error && <p className="error-message">{error}</p>}
         </form>
         <div className="auth-switch">
-          <p>Don't have an account?</p>
+          <p>Don&apos;t have an account?</p>
           <Link href="/signup" className="btn btn-secondary">
             Sign Up
           </Link>

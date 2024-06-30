@@ -42,7 +42,7 @@ export default function Feed() {
         <h1>Feed</h1>
         {session && (
           <div className="post-prompt">
-            <h2>What's on your mind?</h2>
+            <h2>What is new in Tech World?</h2>
             <PostForm onPostCreated={handleNewPost} />
           </div>
         )}

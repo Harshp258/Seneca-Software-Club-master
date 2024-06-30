@@ -74,7 +74,7 @@ export default function Home() {
                 </div>
                 <div className="feature-card">
                   <h3>Checking Out the Posts and Feed</h3>
-                  <p>Let's dive into the fellow members' minds and thoughts. Explore the feed.</p>
+                  <p>Let&apos;s dive into the fellow members minds and thoughts. Explore the feed.</p>
                   <Link href="/feed" className="btn">Feed</Link>
                 </div>
               </div>
