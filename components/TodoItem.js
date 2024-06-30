@@ -1,20 +1,23 @@
-const TodoItem = ({ todo, onToggle, onDelete }) => {
+import { FaTimes } from 'react-icons/fa'; 
+
+function TodoItem({ todo, onToggle, onDelete }) {
   return (
-    <div className="card">
+    <li className="todo-item">
       <input
         type="checkbox"
         checked={todo.completed}
         onChange={onToggle}
-        className="mr-2"
+        className="todo-toggle"
       />
-      <span className={todo.completed ? 'line-through text-gray-500' : ''}>
+      <span className={`todo-text ${todo.completed ? 'todo-completed' : ''}`}>
         {todo.text}
       </span>
-      <button onClick={onDelete} className="btn" style={{ marginLeft: '10px' }}>
-        Delete
+      <button onClick={onDelete} className="todo-delete" aria-label="Delete todo">
+        <FaTimes />
       </button>
-    </div>
+    </li>
   )
 }
+
 
 export default TodoItem

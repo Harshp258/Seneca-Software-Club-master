@@ -16,21 +16,38 @@ export const authOptions = {
         await dbConnect();
         const user = await User.findOne({ email: credentials.email });
         if (user && bcrypt.compareSync(credentials.password, user.password)) {
-          return { id: user._id, name: user.name, email: user.email };
+          return {
+            id: user._id,
+            name: user.name,
+            email: user.email,
+            studentId: user.studentId,
+            course: user.course
+          };
         }
         return null;
       }
     })
   ],
   callbacks: {
-    async jwt({ token, user }) {
-      if (user) {
-        token.id = user.id;
+    async jwt({ token, user, account }) {
+      if (account && user) {
+        return {
+          ...token,
+          id: user.id,
+          studentId: user.studentId,
+          course: user.course
+        };
       }
       return token;
     },
     async session({ session, token }) {
-      session.user.id = token.id;
+      session.user = {
+        id: token.id,
+        name: token.name,
+        email: token.email,
+        studentId: token.studentId,
+        course: token.course
+      };
       return session;
     }
   },

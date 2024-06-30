@@ -68,26 +68,28 @@ export default function TodoList() {
   }
 
   if (!session) {
-    return <Layout><p>Please sign in to view your To-Do list.</p></Layout>
+    return <Layout><p className="sign-in-message">Please sign in to view your To-Do list.</p></Layout>
   }
 
   return (
     <Layout>
-      <div className="max-w-md mx-auto mt-10">
-        <h1 className="text-2xl font-bold mb-5" style={{ color: 'var(--primary-red)' }}>Your To-Do List</h1>
-        <form onSubmit={addTodo} className="mb-5">
+      <br />
+      <br />
+      <div className="todo-container">
+        <h1>Your To-Do List</h1>
+        <form onSubmit={addTodo} className="todo-form">
           <input
             type="text"
             value={newTodo}
             onChange={(e) => setNewTodo(e.target.value)}
             placeholder="Add a new task"
-            className="w-full p-2 border border-gray-300 rounded"
+            className="todo-input"
           />
-          <button type="submit" className="btn mt-2 w-full">
+          <button type="submit" className="add-todo-btn">
             Add Todo
           </button>
         </form>
-        <ul>
+        <ul className="todo-list">
           {todos.map(todo => (
             <TodoItem
               key={todo._id}

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import Layout from '../components/Layout';
 import PostForm from '../components/PostForm';
-import PostItem from '../components/PostItem';
+import PostList from '../components/PostList';
 
 export default function Feed() {
   const { data: session } = useSession();
@@ -36,13 +36,20 @@ export default function Feed() {
 
   return (
     <Layout>
-      <div>
+      <br />
+      <br />
+      <div className="feed-container">
         <h1>Feed</h1>
-        {session && <PostForm onPostCreated={handleNewPost} />}
+        {session && (
+          <div className="post-prompt">
+            <h2>What's on your mind?</h2>
+            <PostForm onPostCreated={handleNewPost} />
+          </div>
+        )}
         {isLoading ? (
-          <p>Loading posts...</p>
+          <p className="loading-message">Loading posts...</p>
         ) : (
-          posts.map(post => <PostItem key={post._id} post={post} />)
+          <PostList posts={posts} />
         )}
       </div>
     </Layout>

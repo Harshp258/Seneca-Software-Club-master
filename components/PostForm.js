@@ -2,18 +2,19 @@ import { useState } from 'react';
 
 export default function PostForm({ onPostCreated }) {
   const [content, setContent] = useState('');
-  const [mediaFile, setMediaFile] = useState(null);
+  const [imageFile, setImageFile] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const maxLength = 280;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if ((!content.trim() && !mediaFile) || isLoading) return;
+    if ((!content.trim() && !imageFile) || isLoading) return;
 
     setIsLoading(true);
     const formData = new FormData();
     formData.append('content', content);
-    if (mediaFile) {
-      formData.append('media', mediaFile);
+    if (imageFile) {
+      formData.append('image', imageFile);
     }
 
     try {
@@ -26,9 +27,9 @@ export default function PostForm({ onPostCreated }) {
       if (data.success) {
         onPostCreated(data.post);
         setContent('');
-        setMediaFile(null);
-        if (e.target.media) {
-          e.target.media.value = '';
+        setImageFile(null);
+        if (e.target.image) {
+          e.target.image.value = '';
         }
       } else {
         console.error('Failed to create post:', data.error);
@@ -41,21 +42,31 @@ export default function PostForm({ onPostCreated }) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="post-form">
       <textarea
         value={content}
-        onChange={(e) => setContent(e.target.value)}
-        placeholder="What's on your mind?"
+        onChange={(e) => setContent(e.target.value.slice(0, maxLength))}
+        placeholder="Share your thoughts..."
+        maxLength={maxLength}
       />
-      <input
-        type="file"
-        name="media"
-        onChange={(e) => setMediaFile(e.target.files[0])}
-        accept="image/*,video/*"
-      />
-      <button type="submit" disabled={isLoading}>
-        {isLoading ? 'Posting...' : 'Post'}
-      </button>
+      <div className="character-count">
+        {content.length}/{maxLength}
+      </div>
+      <div className="form-actions">
+        <label className="file-input-label">
+          <input
+            type="file"
+            name="image"
+            onChange={(e) => setImageFile(e.target.files[0])}
+            accept="image/*"
+            className="file-input"
+          />
+          {imageFile ? 'Image selected' : 'Add image'}
+        </label>
+        <button type="submit" disabled={isLoading || (content.length === 0 && !imageFile)}>
+          {isLoading ? 'Posting...' : 'Post'}
+        </button>
+      </div>
     </form>
   );
 }

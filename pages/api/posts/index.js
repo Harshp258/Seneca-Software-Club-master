@@ -37,20 +37,19 @@ export default async function handler(req, res) {
         try {
           let mediaUrl = '';
           let mediaType = null;
-          if (files.media) {
-            const result = await cloudinary.v2.uploader.upload(files.media.filepath, {
+          if (files.image) {
+            const result = await cloudinary.uploader.upload(files.image.filepath, {
               resource_type: "auto"
             });
             mediaUrl = result.secure_url;
             mediaType = result.resource_type === 'video' ? 'video' : 'image';
           }
 
-          // Handle the content field, ensuring it's a string
           let content = fields.content;
           if (Array.isArray(content)) {
-            content = content[0]; // Take the first element if it's an array
+            content = content[0];
           }
-          content = content.trim(); // Remove any leading/trailing whitespace
+          content = content.trim();
 
           if (!content) {
             return res.status(400).json({ success: false, error: 'Content is required' });
@@ -80,7 +79,6 @@ export default async function handler(req, res) {
         console.error('Error fetching posts:', error);
         return res.status(400).json({ success: false, error: error.message });
       }
-      // ... (GET method handling remains the same)
     } else {
       return res.status(405).json({ success: false, message: 'Method not allowed' });
     }

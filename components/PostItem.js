@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { useSession } from 'next-auth/react';
+import { AiFillHeart } from 'react-icons/ai';
+import { FaComment } from 'react-icons/fa';
 
 export default function PostItem({ post }) {
   const { data: session } = useSession();
@@ -42,39 +44,41 @@ export default function PostItem({ post }) {
   };
 
   return (
-    <div>
-      <div>
+    <>
+      <div className="post-header">
         <h3>{post.user.name}</h3>
         <small>{new Date(post.createdAt).toLocaleString()}</small>
       </div>
       <p>{post.content}</p>
-      {post.mediaUrl && (
-        <div>
-          {post.mediaType === 'video' ? (
-            <video src={post.mediaUrl} controls width="100%" />
-          ) : (
-            <Image src={post.mediaUrl} alt="Post media" width={500} height={300} layout="responsive" />
-          )}
+      {post.mediaUrl && post.mediaType === 'image' && (
+        <div className="post-image-container">
+          <Image 
+            src={post.mediaUrl} 
+            alt="Post image" 
+            width={500} 
+            height={300} 
+            layout="responsive" 
+          />
         </div>
       )}
-      <div>
-        <button onClick={handleLike} disabled={!session}>
-          Like ({likes})
+      <div className="post-actions">
+        <button className="like-btn" onClick={handleLike} disabled={!session}>
+          <AiFillHeart /> Like ({likes})
         </button>
-        <button onClick={() => setShowComments(!showComments)}>
-          Comments ({comments.length})
+        <button className="comment-btn" onClick={() => setShowComments(!showComments)}>
+          <FaComment /> Comments ({comments.length})
         </button>
       </div>
       {showComments && (
-        <div>
+        <div className="post-comments">
           {comments.map((comment, index) => (
-            <div key={index}>
+            <div key={index} className="comment">
               <strong>{comment.user.name}: </strong>
               {comment.content}
             </div>
           ))}
           {session && (
-            <form onSubmit={handleComment}>
+            <form onSubmit={handleComment} className="comment-form">
               <input
                 type="text"
                 value={newComment}
@@ -86,6 +90,6 @@ export default function PostItem({ post }) {
           )}
         </div>
       )}
-    </div>
+    </>
   );
 }
