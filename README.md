@@ -176,7 +176,7 @@ After starting the development server, navigate to `http://localhost:3000` in yo
 ## Contributors
 
 - [Harsh Patel](https://github.com/Harshp258)
-- [Contributor 2](https://github.com/SrushtiP1)
+- [Srushti Patel](https://github.com/SrushtiP1)
 
 
 
