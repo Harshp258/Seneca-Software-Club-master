@@ -47,7 +47,7 @@ export default function Home() {
         {session ? (
           <div className="signed-in-content">
             <div className="tech-icon">
-              <Image src="/image/tech-icon.jpg" alt="Tech Icon" width={350} height={250} />
+              <Image src="/image/tech-icon.jpg" alt="Tech Icon" width={350} height={300} />
             </div>
             <h2 style={{ fontWeight: 'bold', marginTop: '20px' , fontSize: 35}}>
               Discover SenecaCode and Stay Connected
