@@ -36,13 +36,11 @@ export default function Feed() {
 
   return (
     <Layout>
-      <br />
-      <br />
       <div className="feed-container">
-        <h1>Feed</h1>
+        <h1 className="feed-title">Feed</h1>
         {session && (
           <div className="post-prompt">
-            <h2>What is new in Tech World?</h2>
+            <h2>What&apos;s new in the Tech World?</h2>
             <PostForm onPostCreated={handleNewPost} />
           </div>
         )}

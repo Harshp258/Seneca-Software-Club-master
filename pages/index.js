@@ -9,17 +9,14 @@ import { useSession } from 'next-auth/react';
 export default function Home() {
   const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [newPost, setNewPost] = useState('');
+  const [characterCount, setCharacterCount] = useState(0);
   
   const router = useRouter();
   const { data: session } = useSession();
 
   useEffect(() => {
     fetchPosts();
-    
-    const session = JSON.parse(localStorage.getItem('user'));
-    if (session) {
-      setSession(session);
-    }
   }, []);
 
   const fetchPosts = async () => {
@@ -39,22 +36,63 @@ export default function Home() {
     }
   };
 
+  const handlePostSubmit = async (e) => {
+    e.preventDefault();
+    if (newPost.trim().length === 0) return;
+
+    try {
+      const res = await fetch('/api/posts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ content: newPost }),
+      });
+
+      const data = await res.json();
+      if (data.success) {
+        setPosts(prevPosts => [data.post, ...prevPosts]);
+        setNewPost('');
+        setCharacterCount(0);
+      } else {
+        console.error('Failed to create post:', data.error);
+      }
+    } catch (error) {
+      console.error('Error creating post:', error);
+    }
+  };
+
+  const handleInputChange = (e) => {
+    const input = e.target.value;
+    setNewPost(input);
+    setCharacterCount(input.length);
+  };
+
   return (
     <Layout>
-      <br />
-      <br />
       <div className="container">
         {session ? (
           <div className="signed-in-content">
             <div className="tech-icon">
-              <Image src="/image/tech-icon.jpg" alt="Tech Icon" width={350} height={300} />
+              <Image src="/image/sen2.png" alt="Tech Icon" width={100} height={100} />
             </div>
-            <h2 style={{ fontWeight: 'bold', marginTop: '20px' , fontSize: 35}}>
-              Discover SenecaCode and Stay Connected
-            </h2>
+            <h2 className="title">Welcome, {session.user.name}!</h2>
+            <h3 className="subtitle" color>Discover SenecaCode and Stay Connected</h3>
+            <div className="post-form">
+              <form onSubmit={handlePostSubmit}>
+                <textarea
+                  value={newPost}
+                  onChange={handleInputChange}
+                  placeholder="Share your thoughts..."
+                  maxLength={280}
+                />
+                <div className="form-actions">
+                  <span className="character-count">{characterCount}/280</span>
+                  <button type="submit" disabled={newPost.trim().length === 0}>Post</button>
+                </div>
+              </form>
+            </div>
             <div className="testimonials">
               {isLoading ? (
-                <p>Loading posts...</p>
+                <p className="loading-message">Loading posts...</p>
               ) : (
                 <PostList posts={posts} limit={3} />
               )}
@@ -74,25 +112,20 @@ export default function Home() {
                 </div>
                 <div className="feature-card">
                   <h3>Checking Out the Posts and Feed</h3>
-                  <p>Let&apos;s dive into the fellow members minds and thoughts. Explore the feed.</p>
+                  <p>Let&apos;s dive into the fellow members&apos; minds and thoughts. Explore the feed.</p>
                   <Link href="/feed" className="btn">Feed</Link>
                 </div>
               </div>
             </div>
           </div>
         ) : (
-          // Render default content for non-signed-in users
           <>
-            <h1 style={{ color: 'var(--primary-red)', marginBottom: '20px' }}>
-              Welcome to Seneca Software Club
-            </h1>
+            <h1>Welcome to Seneca Software Club</h1>
             <p>Join our community of passionate developers and innovators!</p>
-            <Link href="/signup" className="btn" style={{ marginTop: '20px' }}>
-              Join Now
-            </Link>
+            <Link href="/signup" className="btn">Join Now</Link>
             <div className="testimonials">
               {isLoading ? (
-                <p>Loading posts...</p>
+                <p className="loading-message">Loading posts...</p>
               ) : (
                 <PostList posts={posts} limit={3} />
               )}

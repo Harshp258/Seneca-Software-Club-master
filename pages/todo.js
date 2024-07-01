@@ -86,7 +86,7 @@ export default function TodoList() {
             className="todo-input"
           />
           <button type="submit" className="add-todo-btn">
-            Add Todo
+            Add 
           </button>
         </form>
         <ul className="todo-list">

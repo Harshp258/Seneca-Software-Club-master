@@ -32,7 +32,7 @@ export default function SignIn() {
   }
 
   return (
-    <Layout>
+    <Layout className="auth-layout">
       <br />
       <br />
       <div className="auth-container">

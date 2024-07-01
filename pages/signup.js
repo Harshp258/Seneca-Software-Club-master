@@ -43,7 +43,7 @@ export default function SignUp() {
   }
 
   return (
-    <Layout>
+    <Layout className="auth-layout">
       <br />
       <br />
       <div className="auth-container">

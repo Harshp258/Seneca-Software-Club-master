@@ -17,9 +17,7 @@ export default function About() {
               height={300}
               className="floating-image"
             />
-             
             <h2 className="brand-name">&lt;/&gt;SenecaCode</h2>
-          
           </div>
           <div className="about-text">
             <section className="mission-section">
@@ -55,7 +53,7 @@ export default function About() {
             <section className="meeting-section">
               <h2>Meeting Times</h2>
               <p>
-                We meet every Wednesday at 5:00 PM in Room 301, Technology Building. 
+                We meet every Wednesday at 5:00 PM in Room B5301, Technology Building. 
                 All Seneca students are welcome!
               </p>
             </section>

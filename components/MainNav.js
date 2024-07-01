@@ -1,17 +1,30 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useSession, signOut } from 'next-auth/react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { FaBars, FaTimes } from 'react-icons/fa';
 
 const MainNav = () => {
   const router = useRouter();
   const { data: session } = useSession();
   const [showDropdown, setShowDropdown] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const handleLogout = async () => {
     await signOut({ redirect: false });
     router.push('/');
   };
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > 768) {
+        setMobileMenuOpen(false);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   return (
     <nav className="main-nav">
@@ -20,6 +33,11 @@ const MainNav = () => {
           <Link href="/" className="nav-logo">
             &lt;/&gt; SenecaCode
           </Link>
+          <button className="mobile-menu-toggle" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+            {mobileMenuOpen ? <FaTimes /> : <FaBars />}
+          </button>
+        </div>
+        <div className={`nav-right ${mobileMenuOpen ? 'mobile-open' : ''}`}>
           <div className="nav-links">
             <Link href="/" className={router.pathname === "/" ? "active" : ""}>Home</Link>
             {session && (
@@ -31,14 +49,12 @@ const MainNav = () => {
               </>
             )}
           </div>
-        </div>
-        <div className="nav-right">
-          {session ? (
-            <>
-              <div className="account-dropdown">
-                <button onClick={() => setShowDropdown(!showDropdown)} className="account-btn">
-                  Account
-                </button>
+          <div className="nav-auth">
+            {session ? (
+                <div className="account-dropdown">
+              <button onClick={() => setShowDropdown(!showDropdown)} className="account-btn">
+                {session.user.name}
+              </button>
                 {showDropdown && (
                   <div className="dropdown-content">
                     <Link href="/profile">Edit Profile</Link>
@@ -46,13 +62,13 @@ const MainNav = () => {
                   </div>
                 )}
               </div>
-            </>
-          ) : (
-            <>
-              <Link href="/signin" className="signin-btn">Sign In</Link>
-              <Link href="/signup" className="join-btn">Join Now</Link>
-            </>
-          )}
+            ) : (
+              <>
+                <Link href="/signin" className="signin-btn">Sign In</Link>
+                <Link href="/signup" className="join-btn">Join Now</Link>
+              </>
+            )}
+          </div>
         </div>
       </div>
     </nav>

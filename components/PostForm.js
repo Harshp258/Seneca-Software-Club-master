@@ -52,21 +52,11 @@ export default function PostForm({ onPostCreated }) {
       <div className="character-count">
         {content.length}/{maxLength}
       </div>
-      <div className="form-actions">
-        <label className="file-input-label">
-          <input
-            type="file"
-            name="image"
-            onChange={(e) => setImageFile(e.target.files[0])}
-            accept="image/*"
-            className="file-input"
-          />
-          {imageFile ? 'Image selected' : 'Add image'}
-        </label>
+     
         <button type="submit" disabled={isLoading || (content.length === 0 && !imageFile)}>
           {isLoading ? 'Posting...' : 'Post'}
         </button>
-      </div>
+    
     </form>
   );
 }
