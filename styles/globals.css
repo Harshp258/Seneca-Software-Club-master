@@ -296,15 +296,21 @@ p {
 
 
 /* Footer styles */
+.layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main {
+  flex: 1;
+}
+
 .footer {
   background-color: #2c2c2c;
   color: white;
-  padding: 20px;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000;
+  padding: 40px 20px;
+  margin-top: auto;
 }
 
 .footer-content {
@@ -320,22 +326,22 @@ p {
 
 .brand-name {
   font-weight: bold;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   margin-bottom: 5px;
 }
 
 .all-rights {
-  font-size: 0.7rem;
+  font-size: 0.8rem;
   font-weight: 300;
 }
 
 .footer-right {
   text-align: right;
+  padding-right: 20px;
 }
 
 .footer-right p {
-  margin: 3px 0;
-  font-size: 0.8rem;
+  margin: 5px 0;
 }
 
 .mail-icon {
@@ -345,26 +351,22 @@ p {
 .footer-social {
   display: flex;
   justify-content: center;
-  gap: 15px;
-  margin-top: 10px;
+  gap: 20px;
+  margin-top: 30px;
 }
 
 .footer-social a {
   color: white;
   text-decoration: none;
   transition: color 0.3s ease;
-  font-size: 0.8rem;
 }
 
 .footer-social a:hover {
-  color: var(--primary-red);
+  color: #f0f0f0;
+  text-decoration: underline;
 }
 
 @media (max-width: 768px) {
-  .footer {
-    padding: 15px;
-  }
-
   .footer-content {
     flex-direction: column;
     align-items: center;
@@ -372,13 +374,13 @@ p {
 
   .footer-left, .footer-right {
     text-align: center;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
+    padding-right: 0;
   }
 
   .footer-social {
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
   }
 }
 
