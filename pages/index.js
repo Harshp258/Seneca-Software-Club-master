@@ -120,6 +120,9 @@ export default function Home() {
           </div>
         ) : (
           <>
+          <br />
+          <br />
+          <br />
             <h1>Welcome to Seneca Software Club</h1>
             <p>Join our community of passionate developers and innovators!</p>
             <Link href="/signup" className="btn">Join Now</Link>
